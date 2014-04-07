@@ -31,7 +31,7 @@ public class Odometry extends AbstractNodeMain {
     private Publisher<OdometryMsg> pub;
     private Publisher<std_msgs.String> statePub;
     private Subscriber<EncoderMsg> encoderSub;
-    private Subscriber<OdometryMsg> resetOdometrySub;
+    
 
     public void update(int[] new_ticks) {
         if ((prev_ticks == null && (new_ticks[0] == 0 && new_ticks[1] == 0))
@@ -76,27 +76,12 @@ public class Odometry extends AbstractNodeMain {
 
     @Override
     public void onStart(ConnectedNode node) {
-        pub = node.newPublisher("/rss/odometry", "rss_msgs/OdometryMsg");
+        pub = node.newPublisher("/odo/Odometry", "rss_msgs/OdometryMsg");
         msg = pub.newMessage();
-        encoderSub = node.newSubscriber("/rss/Encoder", "rss_msgs/EncoderMsg");
+        encoderSub = node.newSubscriber("/sense/Encoder", "rss_msgs/EncoderMsg");
         encoderSub.addMessageListener(new EncoderListener(this));
 
-        resetOdometrySub = node.newSubscriber("/rss/odometry_update", "rss_msgs/OdometryMsg");
-        resetOdometrySub.addMessageListener(new MessageListener<rss_msgs.OdometryMsg>() {
-                @Override
-                    public void onNewMessage(rss_msgs.OdometryMsg message) {
-                    System.out.println("Got odom message: " + message.getX() + ","
-                                       + message.getY() + ","
-                                       + message.getTheta());
-                    if (message.getX() == 0 && message.getY() == 0 && message.getTheta() == 0) {
-                        prev_ticks = null;
-                        msg.setX(message.getX());
-                        msg.setY(message.getY());
-                        msg.setTheta(message.getTheta());
-                        reset = true;
-                    }
-                }
-            });
+     
 
         // Start off by reseting
         reset = true;
