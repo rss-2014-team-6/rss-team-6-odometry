@@ -9,7 +9,6 @@ import org.ros.namespace.GraphName;
 import org.ros.node.topic.Subscriber;
 import rss_msgs.EncoderMsg;
 import rss_msgs.OdometryMsg;
-import java.util.Date;
 
 
 public class Odometry extends AbstractNodeMain {
@@ -33,8 +32,6 @@ public class Odometry extends AbstractNodeMain {
     private Publisher<std_msgs.String> statePub;
     private Subscriber<EncoderMsg> encoderSub;
     
-    private Date date;
-
     public void update(int[] new_ticks) {
        
         if ((prev_ticks == null && (new_ticks[0] == 0 && new_ticks[1] == 0))
@@ -66,7 +63,7 @@ public class Odometry extends AbstractNodeMain {
         msg.setX(msg.getX() + (s_left + s_right) * Math.cos(msg.getTheta()) / 2.0);
         msg.setY(msg.getY() + (s_left + s_right) * Math.sin(msg.getTheta()) / 2.0);
 
-	msg.setTime(date.getTime());
+	msg.setTime(System.currentTimeMillis());
 
         prev_ticks[0] = new_ticks[0];
         prev_ticks[1] = new_ticks[1];
@@ -85,8 +82,6 @@ public class Odometry extends AbstractNodeMain {
         msg = pub.newMessage();
         encoderSub = node.newSubscriber("/sense/Encoder", "rss_msgs/EncoderMsg");
         encoderSub.addMessageListener(new EncoderListener(this));
-
-	date = new Date();
 
         // Start off by reseting
         reset = true;
