@@ -45,10 +45,6 @@ public class Odometry extends AbstractNodeMain {
         for (int i = 0; i < 2; i++) {
             ticks[i] = new_ticks[i] - prev_ticks[i];
         }
-        if (ticks[0] == 0 && ticks[1] == 0) {
-            pub.publish(msg);
-            return; // we haven't moved at all
-        }
 
         double s_left = (ticks[0]) * WHEEL_METERS_PER_TICK;
         double s_right = (ticks[1]) * WHEEL_METERS_PER_TICK;
