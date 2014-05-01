@@ -15,14 +15,14 @@ import java.util.Date;
 public class Odometry extends AbstractNodeMain {
 
     private int[] prev_ticks; // (left wheel, right wheel, make int[]
-    private static final double WHEEL_RADIUS_IN_M = 0.0625;
+    public static final double WHEEL_RADIUS_IN_M = 0.0625;
     private static final double ENCODER_RESOLUTION = 2000;
     private static final double GEAR_RATIO = 65.5;
-    private static final double TICKS_PER_REVOLUTION = ENCODER_RESOLUTION
+    public static final double TICKS_PER_REVOLUTION = ENCODER_RESOLUTION
             * GEAR_RATIO;
     private static final double WHEEL_METERS_PER_TICK = WHEEL_RADIUS_IN_M
             * Math.PI * 2 / (TICKS_PER_REVOLUTION);
-    private static final double WHEELBASE = .428;
+    public static final double WHEELBASE = .43;
     /**
      * [x][y][theta]
      */
