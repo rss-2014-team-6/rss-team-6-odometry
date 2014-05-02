@@ -21,7 +21,7 @@ public class Odometry extends AbstractNodeMain {
             * GEAR_RATIO;
     public static final double WHEEL_METERS_PER_TICK = WHEEL_RADIUS_IN_M
             * Math.PI * 2 / (TICKS_PER_REVOLUTION);
-    public static final double WHEELBASE = .428;
+    public static final double WHEELBASE = .43;
     /**
      * [x][y][theta]
      */
